@@ -41,6 +41,36 @@ fi
 
 echo "--- :junit: Processing the junits"
 
+echo "$(ls -ltr $PLUGIN_DIR)"
+
+echo "$(ls -ltr $PLUGIN_DIR/ruby)"
+
+echo "$(ls -ltr $PLUGIN_DIR/ruby/bin)"
+
+echo "PLUGIN_DIR $PLUGIN_DIR"
+echo "artifacts_dir $artifacts_dir"
+echo "annotation_path $annotation_path"
+echo "RUBY_IMAGE $RUBY_IMAGE"
+
+
+echo "LS of /src"
+docker \
+  --log-level "error" \
+  run \
+    --rm \
+    --volume "$artifacts_dir:/junits" \
+    --volume "$PLUGIN_DIR/ruby:/src" \
+    "${RUBY_IMAGE}" ls -ltr /src
+
+echo "LS of /src/bin"
+docker \
+  --log-level "error" \
+  run \
+    --rm \
+    --volume "$artifacts_dir:/junits" \
+    --volume "$PLUGIN_DIR/ruby:/src" \
+    "${RUBY_IMAGE}" ls -ltr /src/bin
+
 set +e
 docker \
   --log-level "error" \
